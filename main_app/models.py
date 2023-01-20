@@ -6,8 +6,25 @@ from django.urls import reverse
 MOVES = (
     ('T', 'Tackle'),
     ('S', 'Scratch'),
-    ('B','Bite'),
+    ('E','Ember'),
+    ('W','Water Gun'),
+    ('V','Vine Whip'),
+    ('R','Rock Smash'),
+    ('Th','Thundershock'),
 )
+
+
+
+
+class Item(models.Model):
+  name = models.CharField(max_length=50)
+  description = models.CharField(max_length=100)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('items_detail', kwargs={'pk': self.id})
 
 
 
@@ -17,7 +34,7 @@ class Pokemon(models.Model):
     type = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     level = models.IntegerField()
-
+    items = models.ManyToManyField(Item)
    
     
     def __str__(self):
